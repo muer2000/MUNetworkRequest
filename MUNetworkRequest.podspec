@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "7.0"
   s.ios.deployment_target = "7.0"
   s.source       = { :git => "https://github.com/muer2000/MUNetworkRequest.git", :tag => s.version }
-  s.source_files = "MUNetworkRequest/**/*"
+  s.source_files = "MUNetworkRequest/MUNetworkRequest.{h,m}"
   s.requires_arc = true
   s.dependency 'AFNetworking', '~> 3.1.0'
 end
