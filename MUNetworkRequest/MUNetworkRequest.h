@@ -66,7 +66,7 @@ typedef void(^MUNetworkRequestProgressBlock)(double progress);
 
 // Response
 @property (nonatomic, readonly) NSData *responseData;
-@property (nonatomic, readonly) id responseJSONObject;
+@property (nonatomic, readonly) id responseObject;
 @property (nonatomic, readonly) NSString *responseString;
 
 
