@@ -38,7 +38,7 @@ static BOOL kSharedIgnoreCancelError = YES;
 
 @property (nonatomic, copy) NSString *responseString;
 
-@property (nonatomic, strong) NSURLSessionTask *sessionTask;
+@property (nonatomic, weak) NSURLSessionTask *sessionTask;
 @property (nonatomic, strong) NSDictionary *responseInfo;
 
 @property (nonatomic, copy) MUNetworkRequestProgressBlock downloadProgressBlock;
@@ -194,23 +194,22 @@ static BOOL kSharedIgnoreCancelError = YES;
             }
         }
         
-        if ([keyPath isEqualToString:kSessionStateKey]) {
-            if ([(NSURLSessionTask *)object state] == NSURLSessionTaskStateCompleted) {
+        if ([keyPath isEqualToString:kSessionStateKey] && [(NSURLSessionTask *)object state] == NSURLSessionTaskStateCompleted) {
+            dispatch_async(dispatch_get_main_queue(), ^{
                 @try {
-                    [object removeObserver:self forKeyPath:kSessionStateKey];
-                    
-                    if (context == MUTaskCountOfBytesSentContext) {
-                        [object removeObserver:self forKeyPath:kSessionCountOfBytesSentKey];
+                    if (self.uploadProgressBlock) {
                         self.uploadProgressBlock = nil;
+                        [object removeObserver:self forKeyPath:kSessionStateKey];
+                        [object removeObserver:self forKeyPath:kSessionCountOfBytesSentKey];
                     }
-                    
-                    if (context == MUTaskCountOfBytesReceivedContext) {
-                        [object removeObserver:self forKeyPath:kSessionCountOfBytesReceivedKey];
+                    if (self.downloadProgressBlock) {
                         self.downloadProgressBlock = nil;
+                        [object removeObserver:self forKeyPath:kSessionStateKey];
+                        [object removeObserver:self forKeyPath:kSessionCountOfBytesReceivedKey];
                     }
                 }
                 @catch (NSException * __unused exception) {}
-            }
+            });
         }
     }
 }
