@@ -38,7 +38,7 @@ static BOOL kSharedIgnoreCancelError = YES;
 
 @property (nonatomic, copy) NSString *responseString;
 
-@property (nonatomic, weak) NSURLSessionTask *sessionTask;
+@property (nonatomic, strong) NSURLSessionTask *sessionTask;
 @property (nonatomic, strong) NSDictionary *responseInfo;
 
 @property (nonatomic, copy) MUNetworkRequestProgressBlock downloadProgressBlock;

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MUNetworkRequest"
-  s.version      = "1.0.3"
+  s.version      = "1.0.4"
   s.license      = "MIT"
   s.summary      = "Network request based on AFNetworking."
   s.homepage     = "https://github.com/muer2000/MUNetworkRequest"
